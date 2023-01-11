@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "dahee-flask-backend"
+version = "0.1.0"
+description = ""
+authors = ["selene-cho29 <selene.cho29@gmail.com>"]
+readme = "README.md"
+packages = [{include = "dahee_flask_backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^2.2.2"
+flask-mysql = "^1.5.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
