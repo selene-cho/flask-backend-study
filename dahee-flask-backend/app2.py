@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello_world():
     return "<h1>Hello, World</h1>"
-  
+
 @app.route("/project")
 def show_project():
     return "<h1>This is project page</h1>"
@@ -13,7 +13,7 @@ def show_project():
 @app.route("/about") # url 주소
 def show_about():
     return "<h1>This is about page</h1>"
-  
+
 # HTML 쿼리
 # 특정 게시물을 보여주는 URL
 # @app.route("/feeds/<int:feed_id>")
@@ -86,8 +86,8 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
 # conn = mysql.connect()
-# cursor = conn.cursor() # 쿼리를 실행하기 위해 필요함
-# cursor.execute( # 실행할 쿼리문
+# cursor = conn.cursor() 
+# cursor.execute( 
 #     """
 #     SELECT * FROM ozdb;
 #     """
@@ -96,7 +96,7 @@ mysql.init_app(app)
 # datas = cursor.fetchone() # django -> get()
 # datas = cursor.fetchall() # django -> all()
 
-# conn.commit() # commit 하면 데이터가 들어옴
+# conn.commit() 
 # cursor.close()
 # conn.close()
 
@@ -105,9 +105,9 @@ mysql.init_app(app)
 @app.route('/api/v1/users', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def users():
     conn = mysql.connect()
-    cursor = conn.cursor()   
+    cursor = conn.cursor()   # 쿼리를 실행하기 위해 필요함
     if(request.method == "GET"): # 유저 조회
-        cursor.execute(
+        cursor.execute(  # 실행할 쿼리문
             """
             SELECT * FROM user;
             """
@@ -124,7 +124,7 @@ def users():
             VALUES('{name}','{age}');
             """
         )
-        conn.commit()
+        conn.commit() # commit 하면 데이터가 들어옴
         cursor.close()
         conn.close()
         return jsonify({'result':'success'})
