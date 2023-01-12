@@ -4,7 +4,8 @@ from flask import jsonify
 from flaskext.mysql import MySQL
 from random import randrange
 import random
-
+import datetime
+from flask import render_template
 app = Flask(__name__)
 
 mysql = MySQL()
@@ -26,7 +27,7 @@ def userGenerate(): # 유저 랜덤 생성 후 생성된 유저 보여주기
     age_list = []
     company_list = []
 
-    for i in range(10):    
+    for i in range(90):    
         last_name = ["김", "조", "박", "황", "이", "정"] # 성
         first_name = ["희", "영", "수", "건", "민", "은", "섭", "오", "인", "지", "사", "모", "태", "랑", "윤", "설", "호"] # 마지막 글자
         name = str(random.choice(last_name)) + str(random.choice(first_name)) + str(random.choice(first_name))
@@ -49,7 +50,7 @@ def userGenerate(): # 유저 랜덤 생성 후 생성된 유저 보여주기
     cursor = conn.cursor() 
     
     # user라는 테이블에 () 안에 있는거 넣음
-    for i in range(10):
+    for i in range(90):
         cursor.execute(
             f"""
                 INSERT INTO user(password, name, gender, birthday, age, company)
@@ -61,3 +62,37 @@ def userGenerate(): # 유저 랜덤 생성 후 생성된 유저 보여주기
     cursor.close()
     conn.close()
     return jsonify({'result':"success"})
+
+@app.route('/generate-board')
+def boardGenerate():
+    
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    
+    for i in range(100):
+        title_list = ["제목1", "제목2", "제목3", "제목4", "제목5", "제목6"]
+        title = random.choice(title_list)
+        
+        content_list = ["내용1", "내용2", "내용3", "내용4", "내용5", "내용6",]
+        content = random.choice(content_list)
+        
+        likes = str(random.randrange(1, 100, 1))
+        
+        img = "www.img.com/" + str(random.randrange(1, 99, 1))
+        
+        created = str(datetime.datetime.now())
+        user_id = str(random.randrange(1,213,1))
+
+        cursor.execute(
+            f"""
+                INSERT INTO board(title, content, likes, img, created, user_id)
+                VALUES ('{title}','{content}','{likes}', '{img}', '{created}', '{user_id}');
+            """
+        )
+        conn.commit()
+        
+    cursor.close()
+    conn.close()
+    
+    return jsonify({'result':"success"})
+    
